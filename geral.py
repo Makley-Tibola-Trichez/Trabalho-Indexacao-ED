@@ -113,19 +113,6 @@ def normalizacao(lista):
         
     return nova_lista
     
-# def normalizacao(lista):
-#     nova_lista = []
-#     nova_nova_lista = []
-#     nova_lista = remove_pontuacao(lista)
-    
-#     print(nova_lista)
-#     for item in nova_lista:
-#         nova_nova_lista.append(item.lower())
-
-#     print(nova_nova_lista)
-#     # inserir codigo
-    
-#     return nova_lista
 
 """
 docTemporario = ''

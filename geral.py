@@ -69,33 +69,29 @@ def tokenizacao(doc_inicial):
     return doc_inicial.split(' ')
 
 def substituir_especiais(token):
-    novo_tokens = ''
-    caracteres_especiais = 'áãâàäçéêëíïóõôöúü'
-    
-    for i in token:
-        print(i in caracteres_especiais)
-        if (i == 'á' or i == 'ã' or i == 'â' or i == 'à' or i == 'ä'):
-            token.replace(i, 'a')
+        
+    for i in range(len(token)):
+        if (token[i] == 'á' or token[i] == 'ã' or token[i] == 'â' or token[i] == 'à' or token[i] == 'ä'):
+            token = token.replace(token[i], 'a')
             print("a")
-            
-        elif (i == 'ç'):
-            token.replace(i, 'c')
+        elif (token[i] == 'ç'):
+            token = token.replace(token[i], 'c')
             print("c")
-        elif (i == 'é' or i == 'ê' or i == 'ë'):
-            token.replace(i, 'e')
+        elif (token[i] == 'é' or token[i] == 'ê' or i == 'ë'):
+            token = token.replace(token[i], 'e')
             print("e")
-        elif (i == 'í' or i == 'ï'):
-            token.replace(i, 'i')
+        elif (token[i] == 'í' or token[i] == 'ï'):
+            token = token.replace(token[i], 'i')
             print("i")
-        elif (i == 'ó' or i == 'õ' or i == 'ô' or i == 'ö'):
-            token.replace(i, 'o')
+        elif (token[i] == 'ó' or token[i] == 'õ' or token[i] == 'ô' or token[i] == 'ö'):
+            token = token.replace(token[i], 'o')
             print("o")
-        elif (i == 'ú' or i == 'ü'):
-            token.replace(i, 'u')
+        elif (token[i] == 'ú' or token[i] == 'ü'):
+            token = token.replace(token[i], 'u')
             print("u")
 
     return token
-    
+
 def normalizacao(lista):
     token = ''
     nova_lista = []
@@ -146,5 +142,12 @@ print(docTemporario)
 # ! quinto    indexacao
 
 carac = 'Com a vitória sobre o Uruguai, o Brasil chegou a 12 pontos e lidera as Eliminatórias da Copa do Mundo FIFA Catar 2022. Arthur vê a Seleção em boa situação na busca por uma vaga na Copa do Mundo, mas sabe que cada partida deve apresentar ainda mais dificuldade. "Nosso objetivo é esse (conquistar a classificação). Estamos trabalhando forte em busca do nosso objetivo. Sempre temos algo a melhorar. A gente não entrou pensando que estamos invictos, pois cada jogo é diferente e difícil. Estamos em um bom caminho, confiamos na comissão técnica e eles confiam na gente. Agora é seguir trabalhando e buscando essa classificação para o Mundial", concluiu.'
+
+
+# # substitui
+# ca = (carac.replace(carac[9], 'o'))
+# # volta a não estar substituido
+# print(carac)
+
 
 print(substituir_especiais(carac))

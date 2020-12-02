@@ -1,30 +1,33 @@
-import glob, os, time, codecs, sys, nltk, pickle
+import glob, time, codecs, nltk, pickle
+
 
 # """"""""""""""" Printa um erro caso digite uma opcao que n existe """""""""""""""""""""
-def opcaoInvalida():
+def opcao_invalida():
     print("========================================================")
     print("                   opção invalida!")
     print("========================================================")
     time.sleep(2)
 
+
 # """"""""""""""""""""""" Le um arquivo txt da pasta Docs """""""""""""""""""""""""""""""
-def lendoarquivo(nomeArquivo):
-    docNormal = ''
-    filename = 'docs/' + nomeArquivo
+def lendo_arquivo(nome_arquivo):
+    doc_normal = ''
+    filename = 'docs/' + nome_arquivo
     f = codecs.open(filename, 'r', "UTF-8")
     for linha in f:
         # remove espaços em branco no inicio e fim de cada linha lida
-        docNormal += linha.strip()
+        doc_normal += linha.strip()
     f.close()
 
     # print(docNormal)
-    return docNormal
+    return doc_normal
+
 
 # """"""""""""""""""""" Le todos os arquivos txt da pasta Docs """""""""""""""""""""""""""
-def lendoarquivos():
+def lendo_arquivos():
     for arq in glob.glob("docs/*.txt"):
         print("[{}]".format(arq))
-        docTemporario = ''
+        doc_temporario = ''
 
         # Abrir arquivo
         f = codecs.open(arq, "r", "UTF-8")
@@ -32,24 +35,27 @@ def lendoarquivos():
 
         for linha in linhas:
             # remove espaços em branco no inicio e fim de cada linha lida
-            docTemporario += linha.strip()
+            doc_temporario += linha.strip()
         f.close()
 
-        print(docTemporario)
+        print(doc_temporario)
         print()
 
+
 # """"""""""" Cria um novo arquivo se n existir, e se existir da um erro """""""""""""""""
-def criandoarquivo(nomeArquivo):
-    filename = 'docs/' + nomeArquivo
+def criando_arquivo(nome_arquivo):
+    filename = 'docs/' + nome_arquivo
     f = codecs.open(filename, 'x', "UTF-8")
     f.close()
 
+
 # """"""""""""""""""" Escreve uma mensagem dentro de certo arquivo """""""""""""""""""""""
-def escrevendoarquivo(nomeArquivo, texto):
-    filename = 'docs/' + nomeArquivo
+def escrevendo_arquivo(nome_arquivo, texto):
+    filename = 'docs/' + nome_arquivo
     f = codecs.open(filename, 'w', "UTF-8")
     f.write(texto)
     f.close()
+
 
 # """"""""""" Remove todas as stopwords que contém no arquivo stopwords.txt """""""""""""""
 def remove_stopwords(lista, stopwords):
@@ -61,9 +67,11 @@ def remove_stopwords(lista, stopwords):
 
     return nova_lista
 
+
 # """"""""""""""""" Separa numa lista as palavras através dos espaços """""""""""""""""""""
 def tokenizacao(doc_inicial):
     return doc_inicial.split(' ')
+
 
 # """"" Substitui as letra com caracteres especiais por letras sem o caracter  """"""""""""
 def substituir_especiais(token):
@@ -83,6 +91,7 @@ def substituir_especiais(token):
 
     return token
 
+
 # """""""""""""""""""""""""""""" Remove os numeros """"""""""""""""""""""""""""""""
 def remove_numeros(token):
     nova_lista = []
@@ -93,6 +102,7 @@ def remove_numeros(token):
             nova_lista.append(token[i])
 
     return nova_lista
+
 
 # """""""""""""""""""""""" Remove os numeros em extenso """"""""""""""""""""""""""
 def remove_numeros_extenso(lista):
@@ -112,17 +122,18 @@ def remove_numeros_extenso(lista):
 
     return nova_lista
 
+
 # """"""" Retira as pontuações, e faz os metodo de substituir especiais e remover numeros """"""""
 def normalizacao(linha):
     token = ''
     nova_lista = []
     pontuacoes = '!()[]{};:\'\"\,<>.?@#%^&*_~ºª'
 
-    linhaFinal = substituir_especiais(linha)
-    linhaFinal = remove_numeros(linhaFinal)
+    linha_final = substituir_especiais(linha)
+    linha_final = remove_numeros(linha_final)
 
-    for i in range(len(linhaFinal)):
-        for j in linhaFinal[i]:
+    for i in range(len(linha_final)):
+        for j in linha_final[i]:
             if (j in pontuacoes):
                 continue
             else:
@@ -133,10 +144,12 @@ def normalizacao(linha):
 
     return retorno
 
+
 # """""""""""""""""""""""" Remove as palavras repetidas """"""""""""""""""""""""""
 def remove_repetidas(lista):
     conjunto = set(lista)
     return conjunto
+
 
 # """""""""""" Faz o processo de stemming = deixa a palavra no radical """"""""""""
 def stemming(lista):
@@ -146,6 +159,7 @@ def stemming(lista):
         stm.append(stemmer.stem(i))
 
     return stm
+
 
 # """""""""""" Faz a indexação da palavra com os doc no dicionario """"""""""""""""
 def indexacao(doc, arq, dicio):
@@ -157,10 +171,6 @@ def indexacao(doc, arq, dicio):
         else:
             dicio[palavra] = [arq]
 
-# """""""""""""""""""""""""""" Esvazia o dicionario """""""""""""""""""""""""""""""
-def limpa_dic(dic):
-    dic = {}
-    return dic
 
 # """""""""""""""""""""" Grava o dicionario no dicionario.txt """""""""""""""""""""
 def gravar_dic_arquivo(arquivo, dicionario):
@@ -168,12 +178,14 @@ def gravar_dic_arquivo(arquivo, dicionario):
     pickle.dump(dicionario, arq)
     arq.close()
 
+
 # """""""""""""""""""""" Le o arquivo dicionario.txt """"""""""""""""""""""""""""""
 def ler_dic_arquivo(arquivo):
     arq = open(arquivo, 'rb')
     dicionario = pickle.load(arq)
     arq.close()
     print(dicionario)
+
 
 # """""""""""""""""""""" abre arquivo stopwords.txt """"""""""""""""""""""""""""""
 def abrir_stopwords():
@@ -189,17 +201,13 @@ def abrir_stopwords():
 
     return stopwords
 
-# """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 # """""""""""""""""""""" métodos opção 3.x""""""""""""""""""""""""""""""""""""""
-
-def criar_lista(var_string):
-    return tokenizacao(var_string)
 
 def encontrar_termos_union(arquivos_busca, termos_obtidos):
     return termos_obtidos.union(arquivos_busca)
 
+
 def encontrar_termos_intersect(arquivos_busca, termos_obtidos):
     return termos_obtidos.intersection(arquivos_busca)
 
-# """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

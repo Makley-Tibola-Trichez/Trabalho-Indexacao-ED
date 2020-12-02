@@ -1,3 +1,4 @@
+import glob, os, time, codecs, sys, nltk, pickle
 from geral import *
 
 dic = dict()
@@ -29,15 +30,40 @@ while(True):
         time.sleep(2)
     elif (opcao == 2):
         dic = limpa_dic(dic)
+        stopwords = abrir_stopwords()
 
-        abrir_docs(dic)
+        for arq in glob.glob("docs/*.txt"):
+            print("[{}]".format(arq) + "\t- indexando!")
+            docTemporario = ''
 
+            f = codecs.open(arq, "r", "UTF-8")
+            linhas = f.readlines()
+
+            for linha in linhas:
+                    linha = normalizacao(linha)
+                    docTemporario += linha.replace('\r\n',' ')
+            f.close()
+
+            docTemporario = docTemporario.replace("-"," ")
+            docTemporario = docTemporario.replace("  "," ")
+            docTemporario = docTemporario.replace("   "," ")
+            docTemporario = substituir_especiais(docTemporario)
+            docTemporario = tokenizacao(docTemporario)
+            docTemporario = remove_stopwords(docTemporario, stopwords)
+            docTemporario = remove_numeros_extenso(docTemporario)
+            docTemporario = stemming(docTemporario)
+            docTemporario = remove_repetidas(docTemporario)
+
+            indexacao(docTemporario, arq, dic)
+            time.sleep(2)
+        
         gravar_dic_arquivo("dicionario.txt", dic)
-        ler_dic_arquivo("dicionario.txt")  
+        time.sleep(3)
     elif (opcao == 3):
         opcao2 = int(input(" Digite qual sua busca: "))
         if (opcao2 == 1):
-            pass
+            lista = criar_lista(input(">>> "))
+            
         elif (opcao2 == 2):
             pass
         elif (opcao2 == 3):

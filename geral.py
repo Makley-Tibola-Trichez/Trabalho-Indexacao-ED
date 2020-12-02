@@ -112,7 +112,7 @@ def remove_numeros_extenso(lista):
 
     return nova_lista
 
-# """""""""""""""""""""""" Retira as pontuações,  """"""""""""""""""""""""""
+# """""""""""""""""""""""" Retira as pontuações, e faz os me """"""""""""""""""""""""""
 def normalizacao(linha):
     token = ''
     nova_lista = []

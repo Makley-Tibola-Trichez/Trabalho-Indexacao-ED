@@ -102,7 +102,7 @@ def remove_numeros_extenso(lista):
 
     arq = codecs.open(nome_arq, "r", "UTF-8")
     linhas = arq.readlines()
-    for linha in linhas:    
+    for linha in linhas:
         numeros_extenso.append(linha.replace('\n', '').strip().lower())
     arq.close()
 
@@ -112,15 +112,15 @@ def remove_numeros_extenso(lista):
 
     return nova_lista
 
-# """""""""""""""""""""""" Retira as pontuações, e faz os me """"""""""""""""""""""""""
+# """"""" Retira as pontuações, e faz os metodo de substituir especiais e remover numeros """"""""
 def normalizacao(linha):
     token = ''
     nova_lista = []
-    pontuacoes = '!()[]{};:\'\"\,<>.?@#%^&*_~'
+    pontuacoes = '!()[]{};:\'\"\,<>.?@#%^&*_~ºª'
 
     linhaFinal = substituir_especiais(linha)
     linhaFinal = remove_numeros(linhaFinal)
-    
+
     for i in range(len(linhaFinal)):
         for j in linhaFinal[i]:
             if (j in pontuacoes):
@@ -130,7 +130,7 @@ def normalizacao(linha):
         nova_lista.append(token)
         retorno = "".join(nova_lista)
         token = ''
-        
+
     return retorno
 
 # """""""""""""""""""""""" Remove as palavras repetidas """"""""""""""""""""""""""
@@ -144,7 +144,7 @@ def stemming(lista):
     stemmer = nltk.stem.RSLPStemmer()
     for i in lista:
         stm.append(stemmer.stem(i))
-        
+
     return stm
 
 # """""""""""" Faz a indexação da palavra com os doc no dicionario """"""""""""""""
@@ -164,16 +164,16 @@ def limpa_dic(dic):
 
 # """""""""""""""""""""" Grava o dicionario no dicionario.txt """""""""""""""""""""
 def gravar_dic_arquivo(arquivo, dicionario):
-    arq = open(arquivo,'wb')
+    arq = open(arquivo, 'wb')
     pickle.dump(dicionario, arq)
     arq.close()
 
 # """""""""""""""""""""" Le o arquivo dicionario.txt """"""""""""""""""""""""""""""
 def ler_dic_arquivo(arquivo):
-    arq = open(arquivo,'rb')
+    arq = open(arquivo, 'rb')
     dicionario = pickle.load(arq)
     arq.close()
-    print (dicionario)
+    print(dicionario)
 
 # """""""""""""""""""""" abre arquivo stopwords.txt """"""""""""""""""""""""""""""
 def abrir_stopwords():
@@ -186,8 +186,9 @@ def abrir_stopwords():
         linha = substituir_especiais(linha)
         stopwords.append(linha.replace('\n', '').strip().lower())
     arq.close()
-    
+
     return stopwords
+
 # """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 # """""""""""""""""""""" métodos opção 3.x""""""""""""""""""""""""""""""""""""""
@@ -195,53 +196,10 @@ def abrir_stopwords():
 def criar_lista(var_string):
     return tokenizacao(var_string)
 
-def pesquisar_docs(list):
-    pass
+def encontrar_termos_union(arquivos_busca, termos_obtidos):
+    return termos_obtidos.union(arquivos_busca)
+
+def encontrar_termos_intersect(arquivos_busca, termos_obtidos):
+    return termos_obtidos.intersection(arquivos_busca)
 
 # """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-'''
-lista1 = {3,7,8,9}
-lista2 = set([1,2,6,4,5])
-
-print(lista1 | lista2)
-print(lista1.union(lista2))
-print(lista2.union(lista1))
-'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ! primeiro  remove stopwords      ok
-# ! segundo   substituir_especiais  ok
-# ! terceiro  tokenizacao           ok
-# ! quarto    remove_stopwords      ok
-# ! quinto    normalizacao          ok
-# ! sexto     indexacao             ok
-     
-

@@ -11,7 +11,6 @@ while(True):
  3. Realizar consultas
      1. Usando operador OR
      2. Usando operador AND
-     3. Usando expressões booleanas
  4. Mostrar Índice Invertido (para debug / print)
  0. sair
 --------------------------------------------------------""")
@@ -23,11 +22,11 @@ while(True):
             try:
                 criandoarquivo(nome)
                 break
-            except:
+            except Exception:
                 print(" Nome do arquivo ja existente!")
         conteudo = input(" Digite o conteudo do arquivo: ")
         escrevendoarquivo(nome, conteudo)
-        time.sleep(2)
+        input("Pressione ENTER para continuar!")
     elif (opcao == 2):
         dic = limpa_dic(dic)
         stopwords = abrir_stopwords()
@@ -55,23 +54,58 @@ while(True):
             docTemporario = remove_repetidas(docTemporario)
 
             indexacao(docTemporario, arq, dic)
-            time.sleep(2)
+            time.sleep(1)
         
         gravar_dic_arquivo("dicionario.txt", dic)
-        time.sleep(3)
+        time.sleep(1)
     elif (opcao == 3):
         opcao2 = int(input(" Digite qual sua busca: "))
+
         if (opcao2 == 1):
-            lista = criar_lista(input(">>> "))
+            palavras = input(" O que deseja buscar: ").lower()
+            busca = tokenizacao(palavras)
+            if len(busca) == 0:
+                print(" ERROR! O mínimo da busca OR é 1 palavra")
+            else:
+                busca = stemming(busca)
+
+                termos_obtidos = set()
+                for i in range(len(busca)):
+                    arquivos_busca = dic[busca[i]]
+                    termos_obtidos = encontrar_termos_union(arquivos_busca, termos_obtidos)
+
+                print(sorted(list(termos_obtidos)))
+                
+            input("Pressione ENTER para continuar!")
             
         elif (opcao2 == 2):
-            pass
-        elif (opcao2 == 3):
-            pass
+            palavras = input(" O que deseja buscar: ").lower()
+            busca = tokenizacao(palavras)
+            if(len(busca) == 0):
+                print(" ERROR! O mínimo da busca AND é 1 palavra")
+            else:
+                busca = stemming(busca)
+                
+                termos_obtidos = set()
+                get_index = []
+                for i in range(len(busca)):
+                    get_index.append(dic[busca[i]])
+                    
+                for j in range(1, len(get_index)):
+                    arquivos_busca = set(dic[busca[0]]).intersection(dic[busca[j]])
+                    termos_obtidos = encontrar_termos_intersect(arquivos_busca, termos_obtidos)
+                    print(arquivos_busca)
+                
+            input("Pressione ENTER para continuar!")
         else:
             opcaoInvalida()
     elif (opcao == 4):
-        pass
+        print(" Termo : Arquivos")
+
+        for i in dic:
+            print(i, dic[i], sep=' : ', end='\n')
+        
+        input("Pressione ENTER para continuar!")
     elif (opcao == 0):
         exit()
     else:

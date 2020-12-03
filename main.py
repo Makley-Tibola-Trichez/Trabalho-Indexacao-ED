@@ -1,6 +1,13 @@
 from geral import *
 import os
 
+###############################
+# !     Integrantes
+# *     Makley Tibola Trichez
+# *     Cléber Limgerhuer
+# *     Arthur Rebonato
+###############################
+
 dic = dict()
 
 while (True):
@@ -25,7 +32,19 @@ while (True):
     if (opcao == 1):
         
         while (True):
-            nome = str(input(" Digite o nome do arquivo (.txt): "))
+            while (True):
+                nome = str(input(" Digite o nome do arquivo (.txt): "))
+                final = ""
+                lista_nome = list(nome)
+
+                for i in range(len(nome) -4, len(nome)):
+                    final += lista_nome[i]
+
+                if (final == ".txt"):
+                    break
+                else:
+                    print(" O arquivo precisa ser '.txt'")
+
             try:
                 criando_arquivo(nome)
                 break
@@ -124,7 +143,7 @@ while (True):
                             print(sorted(list(arquivos_busca)))
                         
                         else:
-                            print("Termos não encontrados!")
+                            print("Termos não encontrados no mesmo arquivo!")
 
                 except Exception:
                     ("--------------------------------------------------------")

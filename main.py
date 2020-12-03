@@ -62,7 +62,7 @@ while (True):
             docTemporario = remove_repetidas(docTemporario)
 
             indexacao(docTemporario, arq, dic)
-            time.sleep(1)
+            time.sleep(0.4)
 
         print("            PRONTO!")
         gravar_dic_arquivo("dicionario.txt", dic)
@@ -119,11 +119,16 @@ while (True):
                         arquivos_busca = set(dic[busca[0]]).intersection(dic[busca[j]])
                         termos_obtidos = encontrar_termos_intersect(arquivos_busca, termos_obtidos)
                         print("--------------------------------------------------------")
-                        print(sorted(list(arquivos_busca)))
+
+                        if len(list(arquivos_busca)) > 0:
+                            print(sorted(list(arquivos_busca)))
+                        
+                        else:
+                            print("Termos não encontrados!")
 
                 except Exception:
                     ("--------------------------------------------------------")
-                    print(" Esta palavra não está armazenada nos arquivos")
+                    print(" Palavras não encontrada nos arquivos")
                     
             input("\n Pressione ENTER para continuar!")
 

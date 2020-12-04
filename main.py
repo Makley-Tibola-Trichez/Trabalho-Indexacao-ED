@@ -4,11 +4,13 @@ import os
 ###############################
 # !     Integrantes
 # *     Makley Tibola Trichez
-# *     Cléber Limgerhuer
+# *     Cléber Limberguer
 # *     Arthur Rebonato
 ###############################
-
-dic = dict()
+try:
+    dic = ler_dic_arquivo('dicionario.txt')
+except Exception:
+    dic = dict()
 
 while (True):
     os.system('cls')
@@ -124,7 +126,7 @@ while (True):
             busca = tokenizacao(palavras)
 
             if (len(busca) <= 1):
-                print(" ERROR! O mínimo da busca AND é 1 palavra")
+                print(" ERROR! O mínimo da busca AND é 2 palavra")
             else:
                 try:
                     busca = stemming(busca)

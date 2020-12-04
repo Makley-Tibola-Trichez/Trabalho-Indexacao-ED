@@ -184,7 +184,7 @@ def ler_dic_arquivo(arquivo):
     arq = open(arquivo, 'rb')
     dicionario = pickle.load(arq)
     arq.close()
-    print(dicionario)
+    return (dicionario)
 
 
 # """""""""""""""""""""" abre arquivo stopwords.txt """"""""""""""""""""""""""""""
